@@ -1,4 +1,6 @@
-// Progrom to write data to mongodb and  retrieve it.
+// Progrom to write data to mongodb abd retrieve it.
+// To do :- Update document .
+
 
 
 var mongoose = require('mongoose');
@@ -20,7 +22,7 @@ var employeeSchema = new Schema({
 
 var Employee = mongoose.model('Employee',employeeSchema); 
 
-// create document, instnace of model
+// create document, instance of model
 
 var satyam =  new Employee({
 	name : 'satyam',
@@ -36,25 +38,140 @@ var shivam =  new Employee({
 	IsMale : true
 });
 
-// save the document
 
-satyam.save(function(err, savedData){
+
+// save  document
+
+shivam.save(function(err, savedData){
 
 	if (err) {
 		console.log('Error while writing data to DB::'+err);
 	} else {
-		console.log('saved Data is::'+savedData);
+		console.log('Writing Data ::'+savedData);
 	}
 
 });
 
 
-// Retrieving documents 
-Employee.find({}, function(err, savedData) {
+
+
+/*	Remove the document
+    Use Model.remove(conditions, [callback]) 
+    Refer http://mongoosejs.com/docs/api.html#model_Model.remove
+*/
+
+
+Employee.remove({name:'shivam'}, function(err, result){
+console.log('Result is ::::  '+result);
+}); 
+
+
+/* Removing document without using callback, use exec() on returned Query
+var removeQuery = Employee.remove({name:'shivam'});
+removeQuery.exec();
+*/
+
+
+
+// Retrieving documents
+
+Employee.find({ name: 'shivam'}, function(err, savedData){
+	if (err) {
+			console.log('Error found at::: '+ err);
+	} else {
+		console.log('Reading data ::----'+savedData);
+	}
+});
+
+
+
+// Find count of saved data
+
+/*Employee.count({name : 'satyam'}, function(err, savedDataCount) {
+	if (err) {
+			console.log('Error found at::: '+ err);
+	} else {
+		console.log('Reading data ::'+savedDataCount );
+	}
+}); 
+
+
+// Retrieve all saved data
+Employee.find({}, function(err, savedData){
 	if (err) {
 			console.log('Error found at::: '+ err);
 	} else {
 		console.log('Reading data ::'+savedData );
 	}
-
 });
+
+// Retrieve only those documents whose name is 'satyam'
+
+*/
+
+
+
+/*
+var query = Employee.findOne({name: 'satyam'});
+query.select('age joiningDate');
+
+query.exec(function(err, employee) {
+console.log('111:::'+ '%s %s', employee.age, employee.joiningDate);
+});
+*/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
