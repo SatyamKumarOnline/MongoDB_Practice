@@ -1,4 +1,4 @@
 # MongoDB_Practice
-MongoDb programs 
-
+Program written in moongoose to add, update, 
+delete and read document from a collection
 
