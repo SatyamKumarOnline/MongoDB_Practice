@@ -1,6 +1,7 @@
-// Progrom to write data to mongodb abd retrieve it.
-// To do :- Update document .
-
+/* Program to write, update, delete and retrieve data in moongoose.
+ Order of Operation :-
+ write(save), update, delete ,read.
+ */
 
 
 var mongoose = require('mongoose');
@@ -40,19 +41,23 @@ var shivam =  new Employee({
 
 
 
-// save  document
+// save document
 
 shivam.save(function(err, savedData){
 
 	if (err) {
-		console.log('Error while writing data to DB::'+err);
+		console.log('Error while Saving data ::'+err);
 	} else {
-		console.log('Writing Data ::'+savedData);
+		console.log('Saving Data ::'+savedData);
 	}
-
 });
 
 
+// Updating document. Refer :- http://mongoosejs.com/docs/api.html#model_Model.update
+
+Employee.update({name : 'shivam'}, {name : 'navin'}, {multi: true}, function(err, updatedDoc){
+	console.log('Updated Doc is ::::  '+updatedDoc);
+});
 
 
 /*	Remove the document
@@ -62,7 +67,7 @@ shivam.save(function(err, savedData){
 
 
 Employee.remove({name:'shivam'}, function(err, result){
-console.log('Result is ::::  '+result);
+console.log('Removed result is ::::  '+result);
 }); 
 
 
@@ -72,17 +77,16 @@ removeQuery.exec();
 */
 
 
+// Retrieving / Reading documents
 
-// Retrieving documents
 
-Employee.find({ name: 'shivam'}, function(err, savedData){
+Employee.find({name:'navin'}, function(err, savedData){
 	if (err) {
 			console.log('Error found at::: '+ err);
 	} else {
-		console.log('Reading data ::----'+savedData);
+		console.log('Found data from DB::'+savedData );
 	}
 });
-
 
 
 // Find count of saved data
@@ -91,7 +95,7 @@ Employee.find({ name: 'shivam'}, function(err, savedData){
 	if (err) {
 			console.log('Error found at::: '+ err);
 	} else {
-		console.log('Reading data ::'+savedDataCount );
+		console.log('Reading number of documents ::'+savedDataCount );
 	}
 }); 
 
@@ -111,13 +115,15 @@ Employee.find({}, function(err, savedData){
 
 
 
-/*
+/*  Find witout using callback
+
 var query = Employee.findOne({name: 'satyam'});
 query.select('age joiningDate');
 
 query.exec(function(err, employee) {
 console.log('111:::'+ '%s %s', employee.age, employee.joiningDate);
 });
+
 */
 
 
